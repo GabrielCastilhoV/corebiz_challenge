@@ -1,18 +1,21 @@
 import styled, { css } from 'styled-components';
 import media from 'styled-media-query';
 
-export const Wrapper = styled.menu`
+export const Wrapper = styled.div`
   width: 100%;
   height: 8rem;
+  background: ${({ theme }) => theme.colors.white};
 
   position: fixed;
+  z-index: 999;
   top: 0;
 `;
 
 export const Content = styled.header`
   max-width: 130rem;
+  height: 100%;
   margin: 0 auto;
-  padding: 1rem;
+  padding: 1rem 2rem;
 
   display: flex;
   align-items: center;
@@ -20,7 +23,7 @@ export const Content = styled.header`
   justify-content: space-between;
 
   ${media.greaterThan('medium')`
-    padding: 4rem;
+    padding: 2rem;
   `}
 
   img {
