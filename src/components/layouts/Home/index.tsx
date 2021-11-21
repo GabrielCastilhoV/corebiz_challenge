@@ -3,6 +3,7 @@ import { BannerSlider } from '../../../components/elements/BannerSlider';
 import { Heading } from '../../../components/elements/Heading';
 import bannersMock from '../../../components/elements/BannerSlider/mock';
 import { ProductSlider } from '../../../components/elements/ProductSlider';
+import { Newsletter } from '../../../components/elements/Newsletter';
 
 import * as S from './styles';
 import { useEffect, useState } from 'react';
@@ -35,7 +36,7 @@ export const HomeLayout = () => {
     }
 
     loadProducts();
-  }, [products]);
+  }, []);
 
   return (
     <S.Wrapper>
@@ -49,6 +50,8 @@ export const HomeLayout = () => {
         <Heading name="Mais Vendidos" />
         <ProductSlider products={products} />;
       </S.ProductWrapper>
+
+      <Newsletter />
     </S.Wrapper>
   );
 };
