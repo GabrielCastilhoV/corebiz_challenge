@@ -8,7 +8,7 @@ export const Wrapper = styled.label`
 
     height: 2rem;
     position: relative;
-    margin-top: 1rem;
+    margin: 0.8rem 0;
 
     ${media.greaterThan('medium')`
       margin-top: 0;
