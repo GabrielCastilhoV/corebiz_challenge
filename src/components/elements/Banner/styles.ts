@@ -64,6 +64,8 @@ export const Title = styled.h2`
 
   ${media.greaterThan('medium')`
     font-size: 3rem;
+    width: 60%;
+    padding-left: 0.3rem;
   `}
 `;
 
@@ -73,6 +75,7 @@ export const Subtitle = styled.h3`
   line-height: 3rem;
 
   ${media.greaterThan('medium')`
+    line-height: 5rem;
     width: 60%;
     font-size:4.5rem;
   `}
