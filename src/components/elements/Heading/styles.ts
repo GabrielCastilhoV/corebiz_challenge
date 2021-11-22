@@ -1,10 +1,14 @@
 import styled, { css } from 'styled-components';
 import media from 'styled-media-query';
 
-export const Wrapper = styled.h2`
-  ${({ theme }) => css`
+type WrapperProps = {
+  color: 'black' | 'white';
+}
+
+export const Wrapper = styled.h2<WrapperProps>`
+  ${({ theme, color }) => css`
     width: 100%;
-    color: ${theme.colors.black};
+    color: ${theme.colors[color]};
     font-size: 2rem;
     font-weight: 900;
     position: relative;
@@ -21,7 +25,7 @@ export const Wrapper = styled.h2`
       height: 0.5rem;
       bottom: -5px;
       left: 0;
-      background: ${theme.colors.gray200};
+      background: ${color === 'black' ? theme.colors.gray200 : theme.colors.white};
 
       ${media.greaterThan('medium')`
         width: 8%;
