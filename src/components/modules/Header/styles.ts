@@ -64,10 +64,10 @@ export const MenuFull = styled.nav<MenuFullProps>`
 
     height: 100vh;
     position: absolute;
-    top: 1rem;
+    top: 0;
     bottom: 0;
     left: 0;
-    right: 1rem;
+    right: 0;
     background: ${theme.colors.white};
 
     overflow: hidden;
@@ -82,8 +82,8 @@ export const MenuFull = styled.nav<MenuFullProps>`
     > svg {
       color: ${theme.colors.black};
       position: absolute;
-      top: 0;
-      right: 0;
+      top: 1rem;
+      right: 1rem;
       cursor: pointer;
       width: 2.4rem;
       height: 2.4rem;
