@@ -39,7 +39,6 @@ export const Wrapper = styled.button<ButtonProps>`
     }
 
     ${media.greaterThan('medium')`
-      width: 14rem;
       padding: 0 1rem;
     `}
   `}
