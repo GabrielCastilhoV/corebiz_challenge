@@ -1,4 +1,6 @@
 import { Header } from '../../../components/modules/Header';
+import { Footer } from '../../../components/modules/Footer';
+
 import { BannerSlider } from '../../../components/elements/BannerSlider';
 import { Heading } from '../../../components/elements/Heading';
 import bannersMock from '../../../components/elements/BannerSlider/mock';
@@ -52,6 +54,7 @@ export const HomeLayout = () => {
       </S.ProductWrapper>
 
       <Newsletter />
+      <Footer />
     </S.Wrapper>
   );
 };
