@@ -8,7 +8,7 @@ type ButtonProps = {
 export const Wrapper = styled.button<ButtonProps>`
   ${({ theme, color }) => css`
     background: ${theme.colors[color]};
-    color: #fff;
+    color: ${color === 'black' ? theme.colors.white : theme.colors.black};
     
     border: 0;
     border-radius: 0.5rem;
@@ -23,9 +23,19 @@ export const Wrapper = styled.button<ButtonProps>`
 
     transition: all 0.3s;
 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    svg {
+      width: 2rem;
+      height: 2rem;
+      margin-right: 0.5rem;
+    }
+
     &:hover {
       cursor: pointer;
-     background: ${theme.colors.gray500};
+     background: ${color === 'black' ? theme.colors.gray500 : theme.colors.gray200};
     }
 
     ${media.greaterThan('medium')`
