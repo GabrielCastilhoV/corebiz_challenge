@@ -1,51 +1,139 @@
 import {
   createContext,
-  SetStateAction,
   ReactNode,
   useContext,
   useState,
   useEffect,
+  useCallback,
 } from 'react';
+
+import { toast } from 'react-toastify';
+
+import { ProductProps } from '../components/layouts/Home';
 
 interface CartProviderProps {
   children: ReactNode;
 }
 
 interface CartContextData {
-  qtd: number;
-  setQtd: React.Dispatch<SetStateAction<number>>;
-  incrementQtd: () => Promise<void>;
+  products: ProductProps[];
+  addProduct: (product: ProductProps) => Promise<void>;
+  removeProduct: (productId: number) => Promise<void>;
+  incrementProduct: (productId: number) => Promise<void>;
+  decrementProduct: (productId: number) => Promise<void>;
 }
 
 const CartContext = createContext<CartContextData>({} as CartContextData);
 
 export function CartProvider({ children }: CartProviderProps) {
-  const [qtd, setQtd] = useState(0);
+  const [products, setProducts] = useState<ProductProps[]>([]);
 
   useEffect(() => {
     async function getQtndProducts(): Promise<void> {
-      const qtndProducts = localStorage.getItem('@corebiz:qtnd');
+      const storagedProducts = localStorage.getItem('@corebiz:products');
 
-      if (qtndProducts) {
-        setQtd(JSON.parse(qtndProducts));
+      if (storagedProducts) {
+        setProducts(JSON.parse(storagedProducts));
       }
     }
 
     getQtndProducts();
   }, []);
 
-  async function incrementQtd(): Promise<void> {
-    setQtd(qtd + 1);
+  const addProduct = useCallback(
+    async (product: ProductProps): Promise<void> => {
+      const updatedCart = [...products];
 
-    localStorage.setItem('@corebiz:qtnd', JSON.stringify(qtd + 1));
-  }
+      const productExists = updatedCart.find(
+        findProduct => product.productId === findProduct.productId,
+      );
+
+      if (productExists) {
+        productExists.qtd! += 1;
+
+        setProducts(updatedCart);
+      } else {
+        setProducts([...products, { ...product, qtd: 1 }]);
+      }
+
+      localStorage.setItem('@corebiz:products', JSON.stringify(products));
+    },
+    [products],
+  );
+
+  const removeProduct = useCallback(
+    async (productId: number): Promise<void> => {
+      try {
+        const updatedCart = [...products];
+
+        const productIndex = updatedCart.findIndex(
+          product => product.productId === productId,
+        );
+
+        if (productIndex >= 0) {
+          updatedCart.splice(productIndex, 1);
+          setProducts(updatedCart);
+        } else {
+          throw Error();
+        }
+      } catch {
+        toast.error('Error deleting the product');
+      }
+    },
+    [products],
+  );
+
+  const incrementProduct = useCallback(
+    async (productId: number): Promise<void> => {
+      const arrProducts = [...products];
+      const productExists = arrProducts.find(
+        findProduct => productId === findProduct.productId,
+      );
+
+      if (productExists) {
+        productExists.qtd! += 1;
+        setProducts(arrProducts);
+      }
+
+      localStorage.setItem('@corebiz:products', JSON.stringify(products));
+    },
+    [products],
+  );
+
+  const decrementProduct = useCallback(
+    async (productId: number): Promise<void> => {
+      const arrProducts = [...products];
+      const productExists = arrProducts.find(
+        findProduct => productId === findProduct.productId,
+      );
+
+      const indexProduct = arrProducts.findIndex(
+        findProduct => productId === findProduct.productId,
+      );
+
+      if (productExists) {
+        if (productExists.qtd === 1) {
+          arrProducts.splice(indexProduct, 1);
+        } else {
+          productExists.qtd! -= 1;
+        }
+      }
+
+      setProducts(arrProducts);
+
+      localStorage.setItem('@corebiz:products', JSON.stringify(products));
+    },
+    [products],
+  );
 
   return (
     <CartContext.Provider
       value={{
-        qtd,
-        setQtd,
-        incrementQtd,
+        products,
+        addProduct,
+        removeProduct,
+        incrementProduct,
+        decrementProduct,
       }}
     >
       {children}

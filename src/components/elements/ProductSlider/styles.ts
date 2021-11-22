@@ -21,7 +21,7 @@ export const Wrapper = styled.section`
       width: 2.5rem;
       height: 2.5rem;
       padding: 0;
-      z-index: 99999;
+      z-index: 100;
       transform: translate(0, -50%);
     }
     .slick-prev {

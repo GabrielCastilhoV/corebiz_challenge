@@ -13,7 +13,12 @@ type IProduct = {
 };
 
 export const Product = ({ product }: IProduct) => {
-  const { incrementQtd } = useCart();
+  const { addProduct } = useCart();
+
+  function handleProductToCart(product: ProductProps) {
+    addProduct(product);
+  }
+
   return (
     <S.Wrapper>
       {product.listPrice && <div className="off">OFF</div>}
@@ -61,7 +66,10 @@ export const Product = ({ product }: IProduct) => {
             <span className="installments">&nbsp;</span>
           )}
 
-          <Button label="COMPRAR" onClick={() => incrementQtd()} />
+          <Button
+            label="COMPRAR"
+            onClick={() => handleProductToCart({ ...product, qtd: 1 })}
+          />
         </S.Price>
       </S.Content>
     </S.Wrapper>
